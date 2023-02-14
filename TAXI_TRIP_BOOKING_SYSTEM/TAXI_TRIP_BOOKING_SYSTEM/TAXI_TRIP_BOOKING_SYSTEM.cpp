@@ -36,7 +36,7 @@ public :
     void view_reportitem()
     {
 
-        string filename = "report_Item.doc";
+        string filename = "report_Item.txt";
         ifstream infile(filename);
 
         if (!infile) {
@@ -72,7 +72,7 @@ public :
     void view_reportComplaint()
     {
 
-        string filename = "d:/report_complaint.doc";
+        string filename = "report_complaint.txt";
         ifstream infile(filename);
 
         if (!infile) {
@@ -200,7 +200,7 @@ public:
     void bookTrip()
     {
         cout << "************ BOOK A TRIP **************" << endl;
-        string filename = "d:/taxi_trips.doc";
+        string filename = "taxi_trips.txt";
         ofstream outfile(filename, ios::app);
         TaxiRide ride;
         cout << "Enter passenger name: ";
@@ -225,7 +225,7 @@ public:
     void report_Item()
     {
 
-        string filename = "d:/report_Item.doc";
+        string filename = "report_Item.txt";
         ofstream outfile(filename, ios::app);
         ReportItem report;
         cout << "************ REPORT LOST ITEM  **************" << endl;
@@ -243,7 +243,7 @@ public:
     }
     void report_Complaint()
     {
-        string filename = "d:/report_complaint.doc";
+        string filename = "report_complaint.txt";
         ofstream outfile(filename, ios::app);
         ReportComplaint reportComplaint;
         cout << "************ REPORT LOST ITEM  **************" << endl;
@@ -261,7 +261,7 @@ public:
     }
    
     void loginCustomer() {
-        string filename = "d:/customeraccount.doc";
+        string filename = "customeraccount.txt";
         ifstream infile(filename);
         User_account account;
         int attempts = 0;
@@ -373,7 +373,7 @@ public:
    }
     void register_Customer() {
 
-        string filename = "d:/customeraccount.doc";
+        string filename = "customeraccount.txt";
         ofstream outfile(filename, ios::app);
         cout << "------------- Create a customer account ------------" << endl;
         User_account account;
@@ -479,7 +479,7 @@ public:
     void edit_AccountDetail_Customer()
     {
         
-        string filename = "d:/taxi_trips.doc";
+        string filename = "taxi_trips.txt";
         ifstream infile(filename);
 
         if (!infile) {
@@ -544,7 +544,7 @@ public:
   
     void delete_AccountDetail_Customer()
     {
-        string filename = "d:/taxi_trips.doc";
+        string filename = "taxi_trips.txt";
         ifstream infile(filename);
 
         if (!infile) {
@@ -604,7 +604,7 @@ public:
 
     void ViewCustomer_detials()
     {
-        string filename = "d:/taxi_trips.doc";
+        string filename = "taxi_trips.txt";
         ifstream infile(filename);
 
         if (!infile) {
@@ -698,7 +698,7 @@ int main() {
 
         switch (choice) {
         case 1:
-            admin.delete_AccountDetail_Customer();
+            admin.login_Admin();
             break;
         case 2:
             handletologin(customer, driver);
