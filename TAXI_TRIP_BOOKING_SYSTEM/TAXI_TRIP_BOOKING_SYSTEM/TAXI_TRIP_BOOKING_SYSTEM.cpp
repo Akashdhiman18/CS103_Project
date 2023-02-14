@@ -6,6 +6,7 @@
 #include <fstream>
 #include <ctime>
 #include <sstream>
+#include<conio.h>
 
 using namespace std;
 
@@ -105,60 +106,92 @@ public :
     }
     void logindriver()
     {
+
         string filename = "d:/driveraccount.doc";
         ifstream infile(filename);
         User_account account;
-        cout << "Enter Username : ";
-        cin>>account.username;
-        cout << "Enter Password : ";
-        cin>>account.password;
-        bool login_successful = false;
-        string line;
-        while (getline(infile, line)) {
-            if (line == account.username) {
-                getline(infile, line);
-                if (line == account.password) {
-                    login_successful = true;
-                    break;
+        int attempts = 0;
+        cout << "\n******* Login driver *******" << endl;;
+        while (attempts < 3) {
+            cout << "\nEnter Username : ";
+            cin >> account.username;
+
+            // Ask for password and hide input
+            cout << "Enter Password : ";
+            char ch;
+            string password = "";
+            while ((ch = _getch()) != '\r') { // '\r' is the enter key
+                if (ch == '\b') { // handle backspace key
+                    if (!password.empty()) {
+                        password.pop_back();
+                        cout << "\b \b"; // erase the last character from the console
+                    }
                 }
+                else {
+                    password.push_back(ch);
+                    cout << "*"; // print a star instead of the actual character
+                }
+            }
+            account.password = password;
+
+            bool login_successful = false;
+            string line;
+            while (getline(infile, line)) {
+                if (line == account.username) {
+                    getline(infile, line);
+                    if (line == account.password) {
+                        login_successful = true;
+                        break;
+                    }
+                }
+            }
+            infile.clear();
+            infile.seekg(0, ios::beg); // Reset file pointer to beginning
+            if (login_successful) {
+
+                cout << "Login successful!" << endl;
+                cout << " ------------------------------------" << endl;
+                cout << "| Welcome to the User Panel         |" << endl;
+                cout << " ------------------------------------" << endl;
+                while (true)
+                {
+                    cout << "\n1. View report item" << "\n";
+                    cout << "2. View report complaint" << "\n";
+                    cout << "4. Exit" << "\n";
+                    cout << "Enter your choice : ";
+                    int opt;
+                    cin >> opt;
+                    if (opt == 1)
+                    {
+                        view_reportitem();
+                    }
+                    else if (opt == 2)
+                    {
+                        view_reportComplaint();
+                    }
+
+                    else if (opt == 3)
+                    {
+                        cout << "GOOD BYE !" << endl;
+                    }
+                    else {
+                        cout << "\nInvalid option. Try again." << endl;
+                    }
+                }
+                break;
+            }
+            else {
+                cout << "\nInvalid username or password. Try again." << endl;
+                attempts++;
             }
         }
         infile.close();
-        if (login_successful) {
-            cout << "Login successful!" << endl;
-            cout << " ------------------------------------" << endl;
-            cout << "| Welcome to the User Panel         |" << endl;
-            cout << " ------------------------------------" << endl;
-            while (true)
-            {
-                cout << "\n1. View report item" << "\n";
-                cout << "2. View report complaint" << "\n";
-                cout << "3. Exit" << "\n";
-                cout << "Enter your choice : ";
-                int opt;
-                cin >> opt;
-                if (opt == 1)
-                {
-                    view_reportitem();
-                }
-                else if (opt == 2)
-                {
-                    view_reportComplaint();
-                }
-
-                else if (opt == 3)
-                {
-                    cout << "GOOD BYE !" << endl;
-                }
-
-                else
-                {
-                    cout << "Invaild";
-                }
-            }
+        if (attempts >= 3) {
+            cout << "\nMaximum login attempts exceeded. Please try again later." << endl;
         }
-    }
 
+    }
+   
 };
 class Customer {
 public:
@@ -231,63 +264,89 @@ public:
         string filename = "d:/customeraccount.doc";
         ifstream infile(filename);
         User_account account;
-        cout << "Enter Username : ";
-        getline(cin, account.username);
-        cout << "Enter Password : ";
-        getline(cin, account.password);
-        bool login_successful = false;
-        string line;
-        while (getline(infile, line)) {
-            if (line == account.username) {
-                getline(infile, line);
-                if (line == account.password) {
-                    login_successful = true;
-                    break;
+        int attempts = 0;
+        cout << "\n******* Login Customer *******" << endl;;
+        while (attempts < 3) {
+            cout << "\nEnter Username : ";
+            cin >> account.username;
+
+            // Ask for password and hide input
+            cout << "Enter Password : ";
+            char ch;
+            string password = "";
+            while ((ch = _getch()) != '\r') { // '\r' is the enter key
+                if (ch == '\b') { // handle backspace key
+                    if (!password.empty()) {
+                        password.pop_back();
+                        cout << "\b \b"; // erase the last character from the console
+                    }
                 }
+                else {
+                    password.push_back(ch);
+                    cout << "*"; // print a star instead of the actual character
+                }
+            }
+            account.password = password;
+
+            bool login_successful = false;
+            string line;
+            while (getline(infile, line)) {
+                if (line == account.username) {
+                    getline(infile, line);
+                    if (line == account.password) {
+                        login_successful = true;
+                        break;
+                    }
+                }
+            }
+            infile.clear();
+            infile.seekg(0, ios::beg); // Reset file pointer to beginning
+            if (login_successful) {
+                cout << "\nLogin successful!" << endl;
+
+                cout << " ------------------------------------" << endl;
+                cout << "| Welcome to the User Panel         |" << endl;
+                cout << " ------------------------------------" << endl;
+                while (true) {
+                    cout << "\n1. Book a trip" << "\n";
+                    cout << "2. Report lost item" << "\n";
+                    cout << "3. Report a complaint" << "\n";
+                    cout << "4. Exit" << "\n";
+                    cout << "Enter your choice : ";
+                    int opt;
+                    cin >> opt;
+                    if (opt == 1) {
+                        bookTrip();
+                    }
+                    else if (opt == 2) {
+                        report_Item();
+                    }
+                    else if (opt == 3) {
+                        report_Complaint();
+                    }
+                    else if (opt == 4) {
+                        cout << "\nGOOD BYE !" << endl;
+                        break; // exit while loop and program
+                    }
+                    else {
+                        cout << "\nInvalid option. Try again." << endl;
+                    }
+                }
+                break;
+            }
+            else {
+                cout << "\nInvalid username or password. Try again." << endl;
+                attempts++;
             }
         }
         infile.close();
-        if (login_successful) {
-            cout << "Login successful!" << endl;
-            cout << " ------------------------------------" << endl;
-            cout << "| Welcome to the User Panel         |" << endl;
-            cout << " ------------------------------------" << endl;
-            while (true)
-            {
-                cout << "\n1. Book a trip" << "\n";
-                cout << "2. Report lost item" << "\n";
-                cout << "3. Report a complaint" << "\n";
-                cout << "4. Exit" << "\n";
-                cout << "Enter your choice : ";
-                int opt;
-                cin >> opt;
-                if (opt == 1)
-                {
-                    bookTrip();
-                }
-                else if (opt == 2)
-                {
-                    report_Item();
-                }
-                else if (opt == 3)
-                {
-                    report_Complaint();
-                }
-                else if (opt == 4)
-                {
-                    cout << "GOOD BYE !" << endl;
-                }
-
-                else
-                {
-                    cout << "Invalid Choice";
-                }
-            }
+        if (attempts >= 3) {
+            cout << "\nMaximum login attempts exceeded. Please try again later." << endl;
         }
-        else {
-            cout << "Login failed. Please check your username and password." << endl;
-        }
+  
     }
+        
+    
 };
 
 class Admin {
@@ -301,7 +360,7 @@ public:
         User_account account;
         cout << "Enter Username : ";
         cin >> account.username;
-        cout << "Enter Password : " ;
+        cout << "Enter Password : ";
         cin >> account.username;
 
     
@@ -450,8 +509,8 @@ public:
 };
 void handleRegistration(Admin& admin) {
     cout << "\n******* REGISTER FOR A NEW MEMBER ******** " << endl;
-    cout << "\n1. Register Customer" << "\n";
-    cout << "2. Register Driver" << "\n";
+    cout << "\n1. Register as a Customer" << "\n";
+    cout << "2. Register as a Driver" << "\n";
     cout << "Your choice : ";
     int option;
     cin >> option;
@@ -467,8 +526,8 @@ void handleRegistration(Admin& admin) {
 void handletologin(Customer& customer, Driver& driver)
 {
     cout << "\n******* LOGIN ACCOUNT ******** " << endl;
-    cout << "\n1. Customer Login" << "\n";
-    cout << "2. Driver Login" << "\n";
+    cout << "\n1. Login as a Customer" << "\n";
+    cout << "2. Login as a Driver" << "\n";
     cout << "Your choice : ";
     int options;
     cin >> options;
@@ -512,7 +571,7 @@ int main() {
             handleRegistration(admin);
             break;
         case 4:
-            cout << "Goodbye! " << endl;
+            cout << "GOODBYE ! " << endl;
             return 0;
         default:
             cout << "Invalid choice. Please try again." << endl;
