@@ -14,7 +14,7 @@ struct TaxiRide {
     string passengerName;
     string pickupAddress;
     string destinationAddress;
-    double fare;
+    string fare;
     time_t time;
 };
 struct ReportItem{
@@ -36,7 +36,7 @@ public :
     void view_reportitem()
     {
 
-        string filename = "d:/report_Item.doc";
+        string filename = "report_Item.doc";
         ifstream infile(filename);
 
         if (!infile) {
@@ -107,7 +107,7 @@ public :
     void logindriver()
     {
 
-        string filename = "d:/driveraccount.doc";
+        string filename = "driveraccount.txt";
         ifstream infile(filename);
         User_account account;
         int attempts = 0;
@@ -169,6 +169,7 @@ public :
                     {
                         view_reportComplaint();
                     }
+                 
 
                     else if (opt == 3)
                     {
@@ -199,8 +200,7 @@ public:
     void bookTrip()
     {
         cout << "************ BOOK A TRIP **************" << endl;
-        cout << "Book Trip successfully !" << endl;
-        string filename = "d:/booktrip.doc";
+        string filename = "d:/taxi_trips.doc";
         ofstream outfile(filename, ios::app);
         TaxiRide ride;
         cout << "Enter passenger name: ";
@@ -352,7 +352,7 @@ public:
 
 class Admin {
 public:
-   ;
+   
    string get_password() {
        string password = "";
        char c;
@@ -393,7 +393,7 @@ public:
 
     void register_Driver() {
 
-        string filename = "d:/driveraccount.doc";
+        string filename = "driveraccount.txt";
         ofstream outfile(filename, ios::app);
         cout << "---------------- Create a driver account --------------" << endl;
         User_account account;
@@ -426,61 +426,185 @@ public:
             if (username == "admin" && password == "password123") {
                 is_valid = true;
                 // if username and password are valid, show the taxi boking panel
-                cout << "  ------------------------------------" << endl;
-                cout << " | Welcome to the Admin Panel        |" << endl;
-                cout << "  ------------------------------------" << endl;
-                cout << "1. View Booking Trip" << endl;
-                cout << "2. Update Profile" << endl;
-                cout << "3. Add new Customer OR Driver" << endl;
-                cout << "4. Exit" << endl;
-                cout << "Enter your choice : " << endl;
-                int choice_num;
-                cin >> choice_num;
-                if (choice_num == 1)
+                while (true)
                 {
-                    ViewCustomer_detials();
-                }
-                else if (choice_num == 3)
-                {
-                    cout << "\n******* REGISTER FOR A NEW MEMBER ******** " << endl;
-                    cout << "\n1. Register as a Customer" << "\n";
-                    cout << "2. Register as a Driver" << "\n";
-                    cout << "Your choice : ";
-                    int option;
-                    cin >> option;
-                    if (option == 1)
-                        register_Customer();
-                    else if (option == 2)
-                        register_Driver();
+                    cout << "  ------------------------------------" << endl;
+                    cout << " | Welcome to the Admin Panel        |" << endl;
+                    cout << "  ------------------------------------" << endl;
+                    cout << "1. View booking trip" << endl;
+                    cout << "2. Update booking trip" << endl;
+                    cout << "3. Add new Customer OR Driver" << endl;
+                    cout << "4. Delete book trip" << endl;
+                    cout << "Enter your choice : "; 
+                    int choice_num;
+                    cin >> choice_num;
+                    if (choice_num == 1)
+                    {
+                        ViewCustomer_detials();
+                    }
+                    else if (choice_num == 3)
+                    {
+                        cout << "\n******* REGISTER FOR A NEW MEMBER ******** " << endl;
+                        cout << "\n1. Register as a Customer" << "\n";
+                        cout << "2. Register as a Driver" << "\n";
+                        cout << "Your choice :";
+                        int option;
+                        cin >> option;
+                        if (option == 1)
+                            register_Customer();
+                        else if (option == 2)
+                            register_Driver();
+                        else {
+                            cout << "Invalid choice" << endl;
+                        }
+                    }
+                    else if (choice_num == 2)
+                    {
+                        edit_AccountDetail_Customer();
+                    }
+                    else if (choice_num == 4)
+                    {
+                        delete_AccountDetail_Customer();
+                    }
+
+
                     else {
-                        cout << "Invalid choice" << endl;
+                        cout << "Invalid username or password. Please try again." << endl;
+
                     }
                 }
-                else if (choice_num == 4)
-                {
-                    
-                }
-
-
-            }
-            
-            else {
-                cout << "Invalid username or password. Please try again." << endl;
             }
         }
     }
     void edit_AccountDetail_Customer()
     {
         
+        string filename = "d:/taxi_trips.doc";
+        ifstream infile(filename);
 
+        if (!infile) {
+            cerr << "Error: could not open file " << filename << endl;
+            return;
+        }
+
+        vector<TaxiRide> customers;
+
+        // Read all customers from the file
+        TaxiRide customer;
+        while (infile >> customer.passengerName >> customer.pickupAddress>> customer.destinationAddress >> customer.fare) {
+            customers.push_back(customer);
+        }
+
+        infile.close();
+
+        if (customers.empty()) {
+            cout << "No customers found." << endl;
+            return;
+        }
+
+        cout << "Enter the name of the customer you wish to edit: ";
+        string name;
+        cin>>name;
+
+        bool found = false;
+        for (auto& customer : customers) {
+            if (customer.passengerName == name) {
+                cout << "Enter new passenger name: ";
+                cin>>customer.passengerName;
+              //  cout << "Enter new fare: ";
+               // cin>>customer.fare;
+               // cout << "Enter new  pick up location: ";
+              //  cin>>customer.pickupAddress;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            cout << "Customer not found." << endl;
+            return;
+        }
+
+        // Write the updated customers back to the file
+        ofstream outfile(filename);
+
+        if (!outfile) {
+            cerr << "Error: could not open file " << filename << endl;
+            return;
+        }
+
+        for (const auto& customer : customers) {
+            outfile << customer.passengerName << " " << customer.pickupAddress << " " << customer.destinationAddress<< " " << customer.fare<<customer.time << endl;
+        }
+
+        outfile.close();
+
+        cout << "Customer account details updated successfully." << endl;
     }
-    void edit_AccountDetail_Driver()
+  
+    void delete_AccountDetail_Customer()
     {
+        string filename = "d:/taxi_trips.doc";
+        ifstream infile(filename);
 
+        if (!infile) {
+            cerr << "Error: could not open file " << filename << endl;
+            return;
+        }
+
+        vector<TaxiRide> customers;
+
+        // Read all customers from the file
+        TaxiRide customer;
+        while (infile >> customer.passengerName >> customer.pickupAddress >> customer.destinationAddress >> customer.fare) {
+            customers.push_back(customer);
+        }
+
+        infile.close();
+
+        if (customers.empty()) {
+            cout << "No customers found." << endl;
+            return;
+        }
+
+        cout << "Enter the name of the customer you wish to delete: ";
+        string name;
+        cin >> name;
+
+        bool found = false;
+        for (auto it = customers.begin(); it != customers.end(); it++) {
+            if (it->passengerName == name) {
+                customers.erase(it);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            cout << "Customer not found." << endl;
+            return;
+        }
+
+        // Write the updated customers back to the file
+        ofstream outfile(filename);
+
+        if (!outfile) {
+            cerr << "Error: could not open file " << filename << endl;
+            return;
+        }
+
+        for (const auto& customer : customers) {
+            outfile << customer.passengerName << " " << customer.pickupAddress << " " << customer.destinationAddress << " " << customer.fare << " " << customer.time << endl;
+        }
+
+        outfile.close();
+
+        cout << "Customer account deleted successfully." << endl;
     }
+
     void ViewCustomer_detials()
     {
-        string filename = "d:/customeraccount.doc";
+        string filename = "d:/taxi_trips.doc";
         ifstream infile(filename);
 
         if (!infile) {
@@ -574,7 +698,7 @@ int main() {
 
         switch (choice) {
         case 1:
-            admin.login_Admin();
+            admin.delete_AccountDetail_Customer();
             break;
         case 2:
             handletologin(customer, driver);
