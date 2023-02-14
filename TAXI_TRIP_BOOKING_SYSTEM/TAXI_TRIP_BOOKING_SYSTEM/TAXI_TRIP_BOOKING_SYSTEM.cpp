@@ -133,7 +133,7 @@ public :
             {
                 cout << "\n1. View report item" << "\n";
                 cout << "2. View report complaint" << "\n";
-                cout << "4. Exit" << "\n";
+                cout << "3. Exit" << "\n";
                 cout << "Enter your choice : ";
                 int opt;
                 cin >> opt;
@@ -280,7 +280,7 @@ public:
 
                 else
                 {
-                    cout << "Invaild";
+                    cout << "Invalid Choice";
                 }
             }
         }
@@ -450,8 +450,8 @@ public:
 };
 void handleRegistration(Admin& admin) {
     cout << "\n******* REGISTER FOR A NEW MEMBER ******** " << endl;
-    cout << "\n1. Register as a Customer" << "\n";
-    cout << "2. Register as a Driver" << "\n";
+    cout << "\n1. Register Customer" << "\n";
+    cout << "2. Register Driver" << "\n";
     cout << "Your choice : ";
     int option;
     cin >> option;
@@ -467,8 +467,8 @@ void handleRegistration(Admin& admin) {
 void handletologin(Customer& customer, Driver& driver)
 {
     cout << "\n******* LOGIN ACCOUNT ******** " << endl;
-    cout << "\n1. Login as a Customer" << "\n";
-    cout << "2. Login as a Driver" << "\n";
+    cout << "\n1. Customer Login" << "\n";
+    cout << "2. Driver Login" << "\n";
     cout << "Your choice : ";
     int options;
     cin >> options;
@@ -512,7 +512,7 @@ int main() {
             handleRegistration(admin);
             break;
         case 4:
-            cout << "GOODBYE ! " << endl;
+            cout << "Goodbye! " << endl;
             return 0;
         default:
             cout << "Invalid choice. Please try again." << endl;
