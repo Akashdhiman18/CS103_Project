@@ -349,9 +349,28 @@ public:
     
 };
 
+
 class Admin {
 public:
    ;
+   string get_password() {
+       string password = "";
+       char c;
+       while ((c = _getch()) != '\r') {
+           if (c == '\b') {
+               if (password.size() > 0) {
+                   password.pop_back();
+                   cout << "\b \b";
+               }
+           }
+           else {
+               password += c;
+               cout << "*";
+           }
+       }
+       cout << endl;
+       return password;
+   }
     void register_Customer() {
 
         string filename = "d:/customeraccount.doc";
@@ -361,21 +380,15 @@ public:
         cout << "Enter Username : ";
         cin >> account.username;
         cout << "Enter Password : ";
-        cin >> account.username;
+        account.password = get_password();
 
     
         // Add ride to the file
         outfile << account.username << endl;
         outfile << account.password << endl;
         outfile.close();
-        system("PAUSE");
         cout << "Register successfully !" << endl;
         
-        system("cls");
-
-
-
-
     }
 
     void register_Driver() {
@@ -387,7 +400,7 @@ public:
         cout << "Enter Username : ";
         cin>>account.username;
         cout << "Enter Password : ";
-        cin>> account.password;
+        account.password = get_password();
 
 
         // Add ride to the file
