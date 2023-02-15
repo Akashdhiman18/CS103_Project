@@ -5,8 +5,10 @@
 #include <vector>
 #include <fstream>
 #include <ctime>
+#include<windows.h> 
 #include <sstream>
 #include<conio.h>
+#include <time.h>     
 
 using namespace std;
 
@@ -15,7 +17,7 @@ struct TaxiRide {
     string pickupAddress;
     string destinationAddress;
     double fare{};
-    time_t time{};
+    time_t time_date{};
     string driverName;
 };
 struct ReportItem {
@@ -27,7 +29,7 @@ struct ReportComplaint {
     string driverName;
     string complaintDescription;
 };
-struct User_account{
+struct User_account {
     string username;
     string password;
     string phoneNumber;
@@ -39,7 +41,8 @@ public:
 
     void view_reportitem()
     {
-
+        Sleep(1000);
+        system("cls");
         string filename = "d:/report_Item.doc";
         ifstream infile(filename);
 
@@ -65,7 +68,7 @@ public:
             cout << "No report item found." << endl;
         }
         else {
-            cout << "Report Items:" << endl;
+            cout << "***************** Report Items ****************" << endl;
 
             for (const auto& reportItems : reportItems) {
                 cout << "Item name: " << reportItem.itemName << endl;
@@ -76,7 +79,8 @@ public:
 
     void view_reportComplaint()
     {
-
+        Sleep(700);
+        system("cls");
         string filename = "d:/report_complaint.doc";
         ifstream infile(filename);
 
@@ -101,7 +105,7 @@ public:
             cout << "No report complaint found." << endl;
         }
         else {
-            cout << "Report Complaints:" << endl;
+            cout << "****************** Report Complaints *******************" << endl;
 
             for (const auto& reportComplaint : reportComplaints) {
                 cout << "Driver name: " << reportComplaint.driverName << endl;
@@ -111,13 +115,14 @@ public:
     }
     void logindriver()
     {
-
+        Sleep(700);
+        system("cls");
         string filename = "d:/driver_account.doc";
         ifstream infile(filename);
         User_account account;
         int attempts = 0;
         map<string, string> accounts;
-        cout << "\n******* Login Customer *******" << endl;;
+        cout << "\n******* User login *******" << endl;;
         while (attempts < 3) {
             cout << "\nEnter Username : ";
             cin >> account.username;
@@ -154,7 +159,10 @@ public:
             infile.clear();
             infile.seekg(0, ios::beg); // Reset file pointer to beginning
             if (accounts.find(account.username) != accounts.end() && accounts[account.username] == account.password) {
-                cout << "Login successful!" << endl;
+                cout << "\nLoading......." << endl;
+                Sleep(800);
+                system("cls");
+                cout << "\nLogin successful" << endl;
                 cout << " ------------------------------------" << endl;
                 cout << "| Welcome to the User Panel         |" << endl;
                 cout << " ------------------------------------" << endl;
@@ -178,7 +186,7 @@ public:
 
                     else if (opt == 3)
                     {
-                        cout << "GOOD BYE !" << endl;
+                        break;
                     }
                     else {
                         cout << "\nInvalid option. Try again." << endl;
@@ -204,11 +212,13 @@ public:
 
     void bookTrip()
     {
-        cout << "************ BOOK A TRIP **************" << endl;
+        Sleep(1000);
+        system("cls");
+        cout << "\n************ BOOK A TRIP **************" << endl;
         string filename = "d:/taxi_trips.doc";
         ofstream outfile(filename, ios::app);
         TaxiRide ride;
-        cout << "Enter passenger name: ";
+        cout << "\nEnter passenger name: ";
         cin >> ride.passengerName;
         cout << "Enter pickup address: ";
         cin >> ride.pickupAddress;
@@ -216,27 +226,30 @@ public:
         cin >> ride.destinationAddress;
         cout << "Enter fare: ";
         cin >> ride.fare;
+        ride.time_date = std::time(nullptr);
 
         // Add ride to the file
         outfile << ride.passengerName << endl;
         outfile << ride.pickupAddress << endl;
         outfile << ride.destinationAddress << endl;
         outfile << ride.fare << endl;
-        outfile << ride.time << endl;
+        outfile << std::asctime(std::localtime(&ride.time_date)) << endl;
 
         outfile.close();
-        cout << "Taxi ride booked successfully." << endl;
+        cout << "\nTaxi ride booked successfully." << endl;
+
     }
 
 
 
     void report_Item()
     {
-
+        Sleep(1000);
+        system("cls");
         string filename = "d:/report_Item.doc";
         ofstream outfile(filename, ios::app);
         ReportItem report;
-        cout << "************ REPORT LOST ITEM  **************" << endl;
+        cout << "\n************ REPORT LOST ITEM  **************" << endl;
         cout << "\nEnter item name: ";
         cin >> report.itemName;
         cout << "Enter item description: ";
@@ -254,10 +267,12 @@ public:
     }
     void report_Complaint()
     {
+        Sleep(1000);
+        system("cls");
         string filename = "d:/report_complaint.doc";
         ofstream outfile(filename, ios::app);
         ReportComplaint reportComplaint;
-        cout << "************ REPORT LOST ITEM  **************" << endl;
+        cout << "\n************ REPORT LOST ITEM  **************" << endl;
         cout << "\nEnter driver name: ";
         cin >> reportComplaint.driverName;
         cout << "Enter item description: ";
@@ -268,16 +283,18 @@ public:
         outfile << reportComplaint.driverName << endl;
         outfile << reportComplaint.complaintDescription << endl;
         outfile.close();
-        cout << "\nComplaint reported successfully!" << "\n";
+        cout << "\nComplaint reported successfully " << "\n";
     }
 
     void loginCustomer() {
-        string filename = "d:/customeraccount.doc";
+        Sleep(700);
+        system("cls");
+        string filename = "d:/customer.doc";
         ifstream infile(filename);
         User_account account;
         int attempts = 0;
         map<string, string> accounts;
-        cout << "\n******* Login Customer *******" << endl;;
+        cout << "\n******* User login *******" << endl;;
         while (attempts < 3) {
             cout << "\nEnter Username : ";
             cin >> account.username;
@@ -314,8 +331,10 @@ public:
             infile.clear();
             infile.seekg(0, ios::beg); // Reset file pointer to beginning
             if (accounts.find(account.username) != accounts.end() && accounts[account.username] == account.password) {
-                cout << "\nLogin successful!" << endl;
-
+                cout << "\nLoading......." << endl;
+                Sleep(800);
+                system("cls");
+                cout << "\nLogin successful " << endl;
                 cout << " ------------------------------------" << endl;
                 cout << "| Welcome to the User Panel         |" << endl;
                 cout << " ------------------------------------" << endl;
@@ -337,7 +356,7 @@ public:
                         report_Complaint();
                     }
                     else if (opt == 4) {
-                        cout << "\nGOOD BYE !" << endl;
+
                         break; // exit while loop and program
                     }
                     else {
@@ -365,6 +384,7 @@ public:
 class Admin {
 public:
 
+
     string get_password() {
         string password = "";
         char c;
@@ -384,8 +404,9 @@ public:
         return password;
     }
     void register_Customer() {
-
-        string filename = "d:/customeraccount.doc";
+        Sleep(700);
+        system("cls");
+        string filename = "d:/customer.doc";
         ofstream outfile(filename, ios::app);
         cout << "------------- Create a customer account ------------" << endl;
         User_account account;
@@ -406,12 +427,17 @@ public:
         outfile << account.password << endl;
 
         outfile.close();
-        cout << "Register successfully !" << endl;
+
+        cout << "Register successfully " << endl;
+        Sleep(1000);
+        system("cls");
+
 
     }
 
     void register_Driver() {
-
+        Sleep(700);
+        system("cls");
         string filename = "d:/driver_account.doc";
         ofstream outfile(filename, ios::app);
         cout << "---------------- Create a driver account --------------" << endl;
@@ -426,115 +452,159 @@ public:
         account.password = get_password();
 
 
+
         // Add ride to the file
         outfile << account.username << endl;
         outfile << account.email << endl;
         outfile << account.phoneNumber << endl;
         outfile << account.password << endl;
         outfile.close();
-        cout << "Register successfully !" << endl;
+        cout << "Register successfully " << endl;
+        Sleep(1000);
+        system("cls");
     }
     void login_Admin()
     {
-
+        Sleep(700);
+        system("cls");
         string username, password;
         bool is_valid = false;
+        int attempts = 0;
+        const int max_attempts = 3; // maximum login attempts
+        cout << "---------------- Admin  account --------------" << endl;
+        while (attempts < max_attempts) {
+            while (!is_valid) {
+                cout << "\nEnter Username: ";
+                cin >> username;
 
-        while (!is_valid) {
-            cout << "Enter Username: ";
-            cin >> username;
-
-            cout << "Enter Password: ";
-            cin >> password;
-
-            // check if username and password are valid
-            if (username == "admin" && password == "password123") {
-                is_valid = true;
-                // if username and password are valid, show the taxi boking panel
-                while (true)
-                {
-                    cout << "  ------------------------------------" << endl;
-                    cout << " | Welcome to the Admin Panel        |" << endl;
-                    cout << "  ------------------------------------" << endl;
-                    cout << "1. View ride history" << endl;
-                    cout << "2. Delete customer / driver" << endl;
-                    cout << "3. Add new customer / driver" << endl;
-                    cout << "4. Edit customer / driver " << endl;
-                    cout << "5. Exit" << "\n";
-                    cout << "Enter your choice : ";
-                    int choice_num;
-                    cin >> choice_num;
-                    if (choice_num == 1)
-                    {
-                        Viewride_detials();
-                    }
-                    else if (choice_num == 3)
-                    {
-                        cout << "\n******* REGISTER FOR A NEW MEMBER ******** " << endl;
-                        cout << "\n1. Register as a Customer" << "\n";
-                        cout << "2. Register as a Driver" << "\n";
-                        cout << "Your choice :";
-                        int option;
-                        cin >> option;
-                        if (option == 1)
-                            register_Customer();
-                        else if (option == 2)
-                            register_Driver();
-                        else {
-                            cout << "Invalid choice" << endl;
+                cout << "Enter Password: ";
+                // hide password input
+                char ch;
+                string password = "";
+                while ((ch = _getch()) != '\r') { // '\r' is the enter key
+                    if (ch == '\b') { // handle backspace key
+                        if (!password.empty()) {
+                            password.pop_back();
+                            cout << "\b \b"; // erase the last character from the console
                         }
                     }
-                    else if (choice_num == 2)
-                    {
-                        cout << "\n******* Delete customer / driver ******** " << endl;
-                        cout << "\n1. Delete customer" << "\n";
-                        cout << "2.  Delete driver" << "\n";
-                        cout << "Your choice :";
-                        int option;
-                        cin >> option;
-                        if (option == 1)
-                            delete_AccountDetail_Customer();
-                        else if (option == 2)
-                            delete_AccountDetail_Driver();
-                        else {
-                            cout << "Invalid choice" << endl;
-                        }
-                    }
-                    else if (choice_num == 4)
-                    {
-                        cout << "\n******* Edit cutomer / driver ******** " << endl;
-                        cout << "\n1. Edit Customer" << "\n";
-                        cout << "2. Edit  Driver" << "\n";
-                        cout << "Your choice : ";
-                        int option;
-                        cin >> option;
-                        if (option == 1)
-                            edit_AccountDetail_Customer();
-                        else if (option == 2)
-                            edit_AccountDetail_driver();
-                        else {
-                            cout << "Invalid choice" << endl;
-                        }
-                    }
-                    else if (choice_num == 5)
-                    {
-                        break;
-                    }
-
-
                     else {
-                        cout << "Invalid username or password. Please try again." << endl;
+                        password.push_back(ch);
+                        cout << "*"; // print a star instead of the actual character
+                    }
+                }
+
+                // check if username and password are valid
+                if (username == "admin" && password == "password123") {
+                    is_valid = true;
+                    cout << "\nLoading......." << endl;
+                    Sleep(800);
+                    system("cls");
+                    // if username and password are valid, show the taxi booking panel
+                    while (true)
+                    {
+                        cout << "  ------------------------------------" << endl;
+                        cout << " | Welcome to the Admin Panel        |" << endl;
+                        cout << "  ------------------------------------" << endl;
+                        cout << "1. View ride history" << endl;
+                        cout << "2. Delete customer / driver" << endl;
+                        cout << "3. Add new customer / driver" << endl;
+                        cout << "4. Edit customer / driver " << endl;
+                        cout << "5. Exit" << "\n";
+                        cout << "Enter your choice : ";
+                        int choice_num;
+                        cin >> choice_num;
+                        if (choice_num == 1)
+                        {
+                            Viewride_detials();
+                        }
+                        else if (choice_num == 3)
+                        {
+                            Sleep(700);
+                            system("cls");
+                            cout << "\n******* REGISTER FOR A NEW MEMBER ******** " << endl;
+                            cout << "\n1. Register as a Customer" << "\n";
+                            cout << "2. Register as a Driver" << "\n";
+                            cout << "Your choice :";
+                            int option;
+                            cin >> option;
+                            if (option == 1)
+                                register_Customer();
+                            else if (option == 2)
+                                register_Driver();
+                            else {
+                                cout << "Invalid choice" << endl;
+                            }
+                        }
+                        else if (choice_num == 2)
+                        {
+                            Sleep(700);
+                            system("cls");
+                            cout << "\n******* Delete customer / driver ******** " << endl;
+                            cout << "\n1. Delete customer" << "\n";
+                            cout << "2.  Delete driver" << "\n";
+                            cout << "Your choice :";
+                            int option;
+                            cin >> option;
+                            if (option == 1)
+                                delete_AccountDetail_Customer();
+                            else if (option == 2)
+                                delete_AccountDetail_Driver();
+                            else {
+                                cout << "Invalid choice" << endl;
+                            }
+                        }
+                        else if (choice_num == 4)
+                        {
+                            Sleep(700);
+                            system("cls");
+                            cout << "\n******* Edit cutomer / driver ******** " << endl;
+                            cout << "\n1. Edit Customer" << "\n";
+                            cout << "2. Edit  Driver" << "\n";
+                            cout << "Your choice : ";
+                            int option;
+                            cin >> option;
+                            if (option == 1)
+                                edit_AccountDetail_Customer();
+                            else if (option == 2)
+                                edit_AccountDetail_driver();
+                            else {
+                                cout << "Invalid choice" << endl;
+                            }
+                        }
+                        else if (choice_num == 5)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            cout << "Invalid choice. Please try again." << endl;
+                        }
+                    }
+                }
+                else {
+                    attempts++;
+                    if (attempts >= max_attempts) {
+                        cout << "\nMaximum login attempts exceeded. Please try again later." << endl;
+                        break;
 
                     }
+                    else {
+                        cout << "\nInvalid username or password. Please try again. " << endl;
+                    }
+
                 }
             }
         }
     }
 
+
+
     void edit_AccountDetail_Customer()
     {
-
-        string filename = "d:/customeraccount.doc";
+        Sleep(1000);
+        system("cls");
+        string filename = "d:/customer.doc";
         ifstream infile(filename);
 
         if (!infile) {
@@ -556,8 +626,8 @@ public:
             cout << "No customers found." << endl;
             return;
         }
-
-        cout << "Enter the name of the customer you wish to edit: ";
+        cout << "********** Update profile **************" << endl;
+        cout << "\nEnter the name of the customer you wish to edit: ";
         string name;
         cin >> name;
 
@@ -597,6 +667,8 @@ public:
     void edit_AccountDetail_driver()
     {
 
+        Sleep(700);
+        system("cls");
         string filename = "d:/driveraccount.doc";
         ifstream infile(filename);
 
@@ -619,8 +691,8 @@ public:
             cout << "No drivers found." << endl;
             return;
         }
-
-        cout << "Enter the name of the driver you wish to edit: ";
+        cout << "********** Update profile **************" << endl;
+        cout << "\nEnter the name of the driver you wish to edit: ";
         string name;
         cin >> name;
 
@@ -657,6 +729,8 @@ public:
     }
     void delete_AccountDetail_Driver()
     {
+        Sleep(1000);
+        system("cls");
         string filename = "d:/driveraccount.doc";
         ifstream infile(filename);
 
@@ -679,8 +753,8 @@ public:
             cout << "No driver found." << endl;
             return;
         }
-
-        cout << "Enter the name of the driver you wish to delete: ";
+        cout << "*********** Delete account *******************" << endl;
+        cout << "\nEnter the name of the driver you wish to delete: ";
         string name;
         cin >> name;
 
@@ -716,41 +790,10 @@ public:
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     void delete_AccountDetail_Customer()
     {
+        Sleep(700);
+        system("cls");
         string filename = "d:/customeraccount.doc";
         ifstream infile(filename);
 
@@ -773,8 +816,8 @@ public:
             cout << "No customers found." << endl;
             return;
         }
-
-        cout << "Enter the name of the customer you wish to delete: ";
+        cout << "************ Delete account ******************" << endl;
+        cout << "\nEnter the name of the customer you wish to delete: ";
         string name;
         cin >> name;
 
@@ -811,6 +854,8 @@ public:
 
     void Viewride_detials()
     {
+        Sleep(1000);
+        system("cls");
         string filename = "d:/taxi_trips.doc";
         ifstream infile(filename);
 
@@ -827,6 +872,7 @@ public:
             getline(infile, ride.pickupAddress);
             getline(infile, ride.destinationAddress);
             infile >> ride.fare;
+            infile >> ride.time_date;
             infile.ignore(1, '\n');
             rides.push_back(ride);
         }
@@ -837,14 +883,15 @@ public:
             cout << "No taxi rides found." << endl;
         }
         else {
-            cout << "Taxi rides:" << endl;
+            cout << "\n------ Taxi trip history --------\n" << endl;
 
             for (const auto& ride : rides) {
                 cout << "Passenger name: " << ride.passengerName << endl;
                 cout << "Pickup address: " << ride.pickupAddress << endl;
                 cout << "Destination address: " << ride.destinationAddress << endl;
-                cout << "Fare: " << ride.fare << endl << endl;
-                cout << "Time: " << ride.time << endl << endl;
+                cout << "Fare: " << ride.fare << endl;
+                cout << "Time: " << ride.time_date << endl << endl;
+
             }
         }
     }
@@ -883,6 +930,13 @@ void handletologin(Customer& customer, Driver& driver)
     {
         driver.logindriver();
     }
+    else
+    {
+        cout << "Invaild option . Try again";
+
+    }
+
+
 }
 
 
