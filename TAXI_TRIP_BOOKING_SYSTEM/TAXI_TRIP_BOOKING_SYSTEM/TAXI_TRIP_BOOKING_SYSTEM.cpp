@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <fstream>
+#include <iomanip>
 #include <ctime>
 #include<windows.h> 
 #include <sstream>
@@ -18,16 +19,18 @@ struct TaxiRide {
     string destinationAddress;
     double fare{};
     time_t time_date{};
-    string driverName;
+
 };
 struct ReportItem {
     string itemName;
     string itemDescription;
     string location;
+    time_t time_date{};
 };
 struct ReportComplaint {
     string driverName;
     string complaintDescription;
+    time_t time_date{};
 };
 struct User_account {
     string username;
@@ -58,6 +61,7 @@ public:
         while (getline(infile, reportItem.itemName)) {
             getline(infile, reportItem.itemDescription);
             getline(infile, reportItem.location);
+            infile >> reportItem.time_date;
             infile.ignore(1, '\n');
             reportItems.push_back(reportItem);
         }
@@ -73,6 +77,7 @@ public:
             for (const auto& reportItems : reportItems) {
                 cout << "Item name: " << reportItem.itemName << endl;
                 cout << "Item description: " << reportItem.itemDescription << endl;
+                cout << "Time: " << std::put_time(std::localtime(&reportItem.time_date), "%c") << endl << endl;
             }
         }
     }
@@ -95,6 +100,7 @@ public:
         // Read all rides from the file
         while (getline(infile, reportComplaint.driverName)) {
             getline(infile, reportComplaint.complaintDescription);
+            infile >> reportComplaint.time_date;
             infile.ignore(1, '\n');
             reportComplaints.push_back(reportComplaint);
         }
@@ -110,6 +116,7 @@ public:
             for (const auto& reportComplaint : reportComplaints) {
                 cout << "Driver name: " << reportComplaint.driverName << endl;
                 cout << "Enter complaint: " << reportComplaint.complaintDescription << endl;
+                cout << "Time: " << std::put_time(std::localtime(&reportComplaint.time_date), "%c") << endl << endl;
             }
         }
     }
@@ -235,6 +242,7 @@ public:
         outfile << ride.fare << endl;
         outfile << std::asctime(std::localtime(&ride.time_date)) << endl;
 
+
         outfile.close();
         cout << "\nTaxi ride booked successfully." << endl;
 
@@ -246,6 +254,7 @@ public:
     {
         Sleep(1000);
         system("cls");
+
         string filename = "d:/report_Item.doc";
         ofstream outfile(filename, ios::app);
         ReportItem report;
@@ -257,11 +266,12 @@ public:
         cout << "Enter location :";
         cin >> report.location;
 
-
+        report.time_date = std::time(nullptr);
         // Add ride to the file
         outfile << report.itemName << endl;
         outfile << report.itemDescription << endl;
         outfile << report.location << endl;
+        outfile << std::asctime(std::localtime(&report.time_date)) << endl;
         outfile.close();
         cout << "\nLost item reported successfully!" << "\n";
     }
@@ -278,10 +288,12 @@ public:
         cout << "Enter item description: ";
         cin >> reportComplaint.complaintDescription;
 
-
+    
+        reportComplaint.time_date = std::time(nullptr);
         // Add ride to the file
         outfile << reportComplaint.driverName << endl;
         outfile << reportComplaint.complaintDescription << endl;
+        outfile << std::asctime(std::localtime(&reportComplaint.time_date)) << endl;
         outfile.close();
         cout << "\nComplaint reported successfully " << "\n";
     }
@@ -890,7 +902,7 @@ public:
                 cout << "Pickup address: " << ride.pickupAddress << endl;
                 cout << "Destination address: " << ride.destinationAddress << endl;
                 cout << "Fare: " << ride.fare << endl;
-                cout << "Time: " << ride.time_date << endl << endl;
+                cout << "Time: " << std::put_time(std::localtime(&ride.time_date), "%c") << endl << endl;
 
             }
         }
