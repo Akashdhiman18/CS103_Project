@@ -162,7 +162,7 @@ public:
                 {
                     cout << "\n1.View report item" << "\n";
                     cout << "2. View report complaint" << "\n";
-                    cout << "4. Exit" << "\n";
+                    cout << "3. Exit" << "\n";
                     cout << "Enter your choice : ";
                     int opt;
                     cin >> opt;
@@ -320,10 +320,9 @@ public:
                 cout << "| Welcome to the User Panel         |" << endl;
                 cout << " ------------------------------------" << endl;
                 while (true) {
-                    cout << "\n1.Book  trip" << "\n";
+                    cout << "\n1. Book  trip" << "\n";
                     cout << "2. Report lost item" << "\n";
                     cout << "3. Report a complaint" << "\n";
-
                     cout << "4. Exit" << "\n";
                     cout << "Enter your choice : ";
                     int opt;
@@ -461,18 +460,19 @@ public:
                     cout << "2. Delete customer / driver" << endl;
                     cout << "3. Add new customer / driver" << endl;
                     cout << "4. Edit customer / driver " << endl;
+                    cout << "5. Exit" << "\n";
                     cout << "Enter your choice : ";
                     int choice_num;
                     cin >> choice_num;
                     if (choice_num == 1)
                     {
-                        Viewride_details();
+                        Viewride_detials();
                     }
                     else if (choice_num == 3)
                     {
                         cout << "\n******* REGISTER FOR A NEW MEMBER ******** " << endl;
-                        cout << "\n1. Register customer" << "\n";
-                        cout << "2. Register driver" << "\n";
+                        cout << "\n1. Register as a Customer" << "\n";
+                        cout << "2. Register as a Driver" << "\n";
                         cout << "Your choice :";
                         int option;
                         cin >> option;
@@ -502,7 +502,7 @@ public:
                     }
                     else if (choice_num == 4)
                     {
-                        cout << "\n******* Edit customer / driver ******** " << endl;
+                        cout << "\n******* Edit cutomer / driver ******** " << endl;
                         cout << "\n1. Edit Customer" << "\n";
                         cout << "2. Edit  Driver" << "\n";
                         cout << "Your choice : ";
@@ -515,6 +515,10 @@ public:
                         else {
                             cout << "Invalid choice" << endl;
                         }
+                    }
+                    else if (choice_num == 5)
+                    {
+                        break;
                     }
 
 
@@ -711,6 +715,40 @@ public:
         cout << "Driver account deleted successfully." << endl;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     void delete_AccountDetail_Customer()
     {
         string filename = "d:/customeraccount.doc";
@@ -771,7 +809,7 @@ public:
         cout << "Customer account deleted successfully." << endl;
     }
 
-    void Viewride_details()
+    void Viewride_detials()
     {
         string filename = "d:/taxi_trips.doc";
         ifstream infile(filename);
@@ -815,8 +853,8 @@ public:
 };
 void handleRegistration(Admin& admin) {
     cout << "\n******* REGISTER FOR A NEW MEMBER ******** " << endl;
-    cout << "\n1. Register Customer" << "\n";
-    cout << "2. Register Driver" << "\n";
+    cout << "\n1. Register as a Customer" << "\n";
+    cout << "2. Register as a Driver" << "\n";
     cout << "Your choice : ";
     int option;
     cin >> option;
@@ -832,8 +870,8 @@ void handleRegistration(Admin& admin) {
 void handletologin(Customer& customer, Driver& driver)
 {
     cout << "\n******* LOGIN ACCOUNT ******** " << endl;
-    cout << "\n1. Customer Login" << "\n";
-    cout << "2. Driver Login" << "\n";
+    cout << "\n1. Login as a Customer" << "\n";
+    cout << "2. Login as a Driver" << "\n";
     cout << "Your choice : ";
     int options;
     cin >> options;
@@ -862,7 +900,7 @@ int main() {
         cout << "1.  Login Admin   " << endl;
         cout << "2.  User Login    " << endl;
         cout << "3.  Register " << endl;
-        cout << "4.  Exit    " << endl;
+        cout << "4.  For Exit    " << endl;
         cout << "Your choice :";
 
         cin >> choice;
