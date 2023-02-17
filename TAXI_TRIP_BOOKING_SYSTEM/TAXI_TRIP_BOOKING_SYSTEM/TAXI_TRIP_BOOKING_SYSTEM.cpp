@@ -101,7 +101,7 @@ public:
 
     void view_reportComplaint()
     {
-        
+
 
 
 
@@ -131,7 +131,7 @@ public:
             case 2:
                 reportcomplaint.driverName = line;
                 break;
-           
+
             case 3:
                 struct tm tm_time = *std::localtime(&reportcomplaint.time_date);
                 reportcomplaint.time_date = std::mktime(&tm_time);
@@ -278,7 +278,7 @@ public:
         outfile << ride.pickupAddress << endl;
         outfile << ride.destinationAddress << endl;
         outfile << ride.fare << endl;
-        outfile << std::asctime(std::localtime(&ride.time_date)) << endl;
+        outfile << std::asctime(std::localtime(&ride.time_date)) ;
 
 
         outfile.close();
@@ -303,21 +303,21 @@ public:
         cin >> report.itemName;
         cout << "Enter item description: ";
         cin.ignore(); // to clear the newline character from the input buffer
-        cin>>report.itemDescription;
+        getline(cin,report.itemDescription);
 
         report.time_date = std::time(nullptr);
         // Add ride to the file
+        outfile << report.location << endl;
         outfile << report.itemName << endl;
         outfile << report.itemDescription << endl;
-        outfile << report.location << endl;
-        outfile << std::asctime(std::localtime(&report.time_date)) << endl;
+        outfile << std::asctime(std::localtime(&report.time_date));
         outfile.close();
         cout << "\nLost item reported successfully!" << "\n";
     }
     void report_Complaint()
     {
-       Sleep(1000);
-       system("cls");
+        Sleep(1000);
+        system("cls");
         string filename = "d:/Report_Complaint.doc";
         ofstream outfile(filename, ios::app);
         ReportComplaint reportComplaint;
@@ -326,14 +326,14 @@ public:
         cin >> reportComplaint.driverName;
         cout << "Enter item description: ";
         cin.ignore(); // to clear the newline character from the input buffer
-        cin>>reportComplaint.complaintDescription;
+        cin >> reportComplaint.complaintDescription;
 
 
         reportComplaint.time_date = std::time(nullptr);
         // Add ride to the file
         outfile << reportComplaint.driverName << endl;
         outfile << reportComplaint.complaintDescription << endl;
-        outfile << std::asctime(std::localtime(&reportComplaint.time_date)) << endl;
+        outfile << std::asctime(std::localtime(&reportComplaint.time_date));
         outfile.close();
         cout << "\nComplaint reported successfully " << "\n";
     }
@@ -610,9 +610,9 @@ public:
                         {
                             Sleep(700);
                             system("cls");
-                            cout << "\n******* Edit customer / driver ******** " << endl;
-                            cout << "\n1. Edit customer" << "\n";
-                            cout << "2. Edit  driver" << "\n";
+                            cout << "\n******* Edit cutomer / driver ******** " << endl;
+                            cout << "\n1. Edit Customer" << "\n";
+                            cout << "2. Edit  Driver" << "\n";
                             cout << "Your choice : ";
                             int option;
                             cin >> option;
@@ -953,8 +953,8 @@ public:
 };
 void handleRegistration(Admin& admin) {
     cout << "\n******* REGISTER FOR A NEW MEMBER ******** " << endl;
-    cout << "\n1. Register customer" << "\n";
-    cout << "2. Register driver" << "\n";
+    cout << "\n1. Register as a Customer" << "\n";
+    cout << "2. Register as a Driver" << "\n";
     cout << "Your choice : ";
     int option;
     cin >> option;
@@ -970,8 +970,8 @@ void handleRegistration(Admin& admin) {
 void handletologin(Customer& customer, Driver& driver)
 {
     cout << "\n******* LOGIN ACCOUNT ******** " << endl;
-    cout << "\n1. Customer login" << "\n";
-    cout << "2. Driver login" << "\n";
+    cout << "\n1. Login as a Customer" << "\n";
+    cout << "2. Login as a Driver" << "\n";
     cout << "Your choice : ";
     int options;
     cin >> options;
@@ -1007,7 +1007,7 @@ int main() {
         cout << "1.  Login Admin   " << endl;
         cout << "2.  User Login    " << endl;
         cout << "3.  Register " << endl;
-        cout << "4.  Exit    " << endl;
+        cout << "4.  For Exit    " << endl;
         cout << "Your choice :";
 
         cin >> choice;
@@ -1024,7 +1024,7 @@ int main() {
             handleRegistration(admin);
             break;
         case 4:
-            cout << "Goodbye! " << endl;
+            cout << "GOODBYE ! " << endl;
             return 0;
         default:
             cout << "Invalid choice. Please try again." << endl;
