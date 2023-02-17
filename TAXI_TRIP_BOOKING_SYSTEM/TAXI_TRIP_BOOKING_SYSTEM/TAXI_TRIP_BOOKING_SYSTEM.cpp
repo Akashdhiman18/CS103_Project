@@ -32,7 +32,7 @@ struct ReportComplaint {
     string complaintDescription;
     time_t time_date{};
 };
-struct User_account {
+struct UserAccount {
     string username;
     string password;
     string phoneNumber;
@@ -42,11 +42,11 @@ struct User_account {
 class Driver {
 public:
 
-    void view_reportitem()
+    void view_reportItem()
     {
         Sleep(1000);
         system("cls");
-        string filename = "d:/report_Item.doc";
+        string filename = "d:/Report_Item.doc";
         ifstream infile(filename);
 
         if (!infile) {
@@ -57,13 +57,28 @@ public:
         ReportItem reportItem;
         vector<ReportItem> reportItems;
 
-        // Read all rides from the file
-        while (getline(infile, reportItem.itemName)) {
-            getline(infile, reportItem.itemDescription);
-            getline(infile, reportItem.location);
-            infile >> reportItem.time_date;
-            infile.ignore(1, '\n');
-            reportItems.push_back(reportItem);
+        string line;
+        int field = 1; // 1 for location, 2 for item name, 3 for item description, 4 for time/date
+
+        while (getline(infile, line)) {
+            switch (field) {
+            case 1:
+                reportItem.location = line;
+                break;
+            case 2:
+                reportItem.itemName = line;
+                break;
+            case 3:
+                reportItem.itemDescription = line;
+                break;
+            case 4:
+                struct tm tm_time = *std::localtime(&reportItem.time_date);
+                reportItem.time_date = std::mktime(&tm_time);
+                reportItems.push_back(reportItem);
+                field = 0; // reset field
+                break;
+            }
+            field++;
         }
 
         infile.close();
@@ -74,7 +89,8 @@ public:
         else {
             cout << "***************** Report Items ****************" << endl;
 
-            for (const auto& reportItems : reportItems) {
+            for (const auto& reportItem : reportItems) {
+                cout << "location: " << reportItem.location << endl;
                 cout << "Item name: " << reportItem.itemName << endl;
                 cout << "Item description: " << reportItem.itemDescription << endl;
                 cout << "Time: " << std::put_time(std::localtime(&reportItem.time_date), "%c") << endl << endl;
@@ -82,11 +98,18 @@ public:
         }
     }
 
+
     void view_reportComplaint()
     {
-        Sleep(700);
+        
+
+
+
+
+
+        Sleep(1000);
         system("cls");
-        string filename = "d:/report_complaint.doc";
+        string filename = "d:/Report_Complaint.doc";
         ifstream infile(filename);
 
         if (!infile) {
@@ -94,29 +117,43 @@ public:
             return;
         }
 
-        ReportComplaint reportComplaint;
-        vector<ReportComplaint> reportComplaints;
+        ReportComplaint reportcomplaint;
+        vector<ReportComplaint> reportcomplaints;
 
-        // Read all rides from the file
-        while (getline(infile, reportComplaint.driverName)) {
-            getline(infile, reportComplaint.complaintDescription);
-            infile >> reportComplaint.time_date;
-            infile.ignore(1, '\n');
-            reportComplaints.push_back(reportComplaint);
+        string line;
+        int field = 1; // 1 for location, 2 for item name, 3 for item description, 4 for time/date
+
+        while (getline(infile, line)) {
+            switch (field) {
+            case 1:
+                reportcomplaint.complaintDescription = line;
+                break;
+            case 2:
+                reportcomplaint.driverName = line;
+                break;
+           
+            case 3:
+                struct tm tm_time = *std::localtime(&reportcomplaint.time_date);
+                reportcomplaint.time_date = std::mktime(&tm_time);
+                reportcomplaints.push_back(reportcomplaint);
+                field = 0; // reset field
+                break;
+            }
+            field++;
         }
 
         infile.close();
 
-        if (reportComplaints.empty()) {
-            cout << "No report complaint found." << endl;
+        if (reportcomplaints.empty()) {
+            cout << "No complaint found." << endl;
         }
         else {
-            cout << "****************** Report Complaints *******************" << endl;
+            cout << "***************** Report complaint ****************" << endl;
 
-            for (const auto& reportComplaint : reportComplaints) {
-                cout << "Driver name: " << reportComplaint.driverName << endl;
-                cout << "Enter complaint: " << reportComplaint.complaintDescription << endl;
-                cout << "Time: " << std::put_time(std::localtime(&reportComplaint.time_date), "%c") << endl << endl;
+            for (const auto& reportcomplaint : reportcomplaints) {
+                cout << "Driver name: " << reportcomplaint.driverName << endl;
+                cout << "Enter complaint: " << reportcomplaint.complaintDescription << endl;
+                cout << "Time: " << std::put_time(std::localtime(&reportcomplaint.time_date), "%c") << endl << endl;
             }
         }
     }
@@ -126,7 +163,7 @@ public:
         system("cls");
         string filename = "d:/driver_account.doc";
         ifstream infile(filename);
-        User_account account;
+        UserAccount account;
         int attempts = 0;
         map<string, string> accounts;
         cout << "\n******* User login *******" << endl;;
@@ -183,7 +220,7 @@ public:
                     cin >> opt;
                     if (opt == 1)
                     {
-                        view_reportitem();
+                        view_reportItem();
                     }
                     else if (opt == 2)
                     {
@@ -212,6 +249,7 @@ public:
         }
 
     }
+
 
 };
 class Customer {
@@ -250,21 +288,22 @@ public:
 
 
 
-    void report_Item()
+    void reportItem()
     {
         Sleep(1000);
         system("cls");
 
-        string filename = "d:/report_Item.doc";
+        string filename = "d:/Report_Item.doc";
         ofstream outfile(filename, ios::app);
         ReportItem report;
         cout << "\n************ REPORT LOST ITEM  **************" << endl;
-        cout << "\nEnter item name: ";
+        cout << "\nEnter location :";
+        cin >> report.location;
+        cout << "nter item name: ";
         cin >> report.itemName;
         cout << "Enter item description: ";
-        cin >> report.itemDescription;
-        cout << "Enter location :";
-        cin >> report.location;
+        cin.ignore(); // to clear the newline character from the input buffer
+        cin>>report.itemDescription;
 
         report.time_date = std::time(nullptr);
         // Add ride to the file
@@ -277,18 +316,19 @@ public:
     }
     void report_Complaint()
     {
-        Sleep(1000);
-        system("cls");
-        string filename = "d:/report_complaint.doc";
+       Sleep(1000);
+       system("cls");
+        string filename = "d:/Report_Complaint.doc";
         ofstream outfile(filename, ios::app);
         ReportComplaint reportComplaint;
         cout << "\n************ REPORT LOST ITEM  **************" << endl;
         cout << "\nEnter driver name: ";
         cin >> reportComplaint.driverName;
         cout << "Enter item description: ";
-        cin >> reportComplaint.complaintDescription;
+        cin.ignore(); // to clear the newline character from the input buffer
+        cin>>reportComplaint.complaintDescription;
 
-    
+
         reportComplaint.time_date = std::time(nullptr);
         // Add ride to the file
         outfile << reportComplaint.driverName << endl;
@@ -303,7 +343,7 @@ public:
         system("cls");
         string filename = "d:/customer.doc";
         ifstream infile(filename);
-        User_account account;
+        UserAccount account;
         int attempts = 0;
         map<string, string> accounts;
         cout << "\n******* User login *******" << endl;;
@@ -362,7 +402,7 @@ public:
                         bookTrip();
                     }
                     else if (opt == 2) {
-                        report_Item();
+                        reportItem();
                     }
                     else if (opt == 3) {
                         report_Complaint();
@@ -421,7 +461,7 @@ public:
         string filename = "d:/customer.doc";
         ofstream outfile(filename, ios::app);
         cout << "------------- Create a customer account ------------" << endl;
-        User_account account;
+        UserAccount account;
         cout << "Enter  username : ";
         cin >> account.username;
         cout << "Enter email address :";
@@ -453,7 +493,7 @@ public:
         string filename = "d:/driver_account.doc";
         ofstream outfile(filename, ios::app);
         cout << "---------------- Create a driver account --------------" << endl;
-        User_account account;
+        UserAccount account;
         cout << "Enter Username : ";
         cin >> account.username;
         cout << "Enter email address :";
@@ -586,7 +626,8 @@ public:
                         }
                         else if (choice_num == 5)
                         {
-                            break;
+                            cout << "Exiting Admin panel..." << endl;
+                            return; // or use break if the function is not void
                         }
                         else
                         {
@@ -624,10 +665,10 @@ public:
             return;
         }
 
-        vector<User_account> customers;
+        vector<UserAccount> customers;
 
         // Read all customers from the file
-        User_account customer;
+        UserAccount customer;
         while (infile >> customer.username >> customer.email >> customer.phoneNumber >> customer.password) {
             customers.push_back(customer);
         }
@@ -681,7 +722,7 @@ public:
 
         Sleep(700);
         system("cls");
-        string filename = "d:/driveraccount.doc";
+        string filename = "d:/Driver.doc";
         ifstream infile(filename);
 
         if (!infile) {
@@ -689,10 +730,10 @@ public:
             return;
         }
 
-        vector<User_account> drivers;
+        vector<UserAccount> drivers;
 
         // Read all customers from the file
-        User_account driver;
+        UserAccount driver;
         while (infile >> driver.username >> driver.email >> driver.phoneNumber >> driver.password) {
             drivers.push_back(driver);
         }
@@ -743,7 +784,7 @@ public:
     {
         Sleep(1000);
         system("cls");
-        string filename = "d:/driveraccount.doc";
+        string filename = "d:/Driver.doc";
         ifstream infile(filename);
 
         if (!infile) {
@@ -751,10 +792,10 @@ public:
             return;
         }
 
-        vector<User_account> drivers;
+        vector<UserAccount> drivers;
 
         // Read all customers from the file
-        User_account driver;
+        UserAccount driver;
         while (infile >> driver.username >> driver.email >> driver.phoneNumber >> driver.password) {
             drivers.push_back(driver);
         }
@@ -806,7 +847,7 @@ public:
     {
         Sleep(700);
         system("cls");
-        string filename = "d:/customeraccount.doc";
+        string filename = "d:/customer.doc";
         ifstream infile(filename);
 
         if (!infile) {
@@ -814,10 +855,10 @@ public:
             return;
         }
 
-        vector<User_account> customers;
+        vector<UserAccount> customers;
 
         // Read all customers from the file
-        User_account customer;
+        UserAccount customer;
         while (infile >> customer.username >> customer.email >> customer.phoneNumber >> customer.password) {
             customers.push_back(customer);
         }
