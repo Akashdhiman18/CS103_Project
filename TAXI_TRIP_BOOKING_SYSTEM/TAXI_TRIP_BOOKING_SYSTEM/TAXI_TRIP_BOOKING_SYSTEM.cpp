@@ -299,7 +299,7 @@ public:
         cout << "\n************ REPORT LOST ITEM  **************" << endl;
         cout << "\nEnter location :";
         cin >> report.location;
-        cout << "nter item name: ";
+        cout << "Enter item name: ";
         cin >> report.itemName;
         cout << "Enter item description: ";
         cin.ignore(); // to clear the newline character from the input buffer
@@ -610,9 +610,9 @@ public:
                         {
                             Sleep(700);
                             system("cls");
-                            cout << "\n******* Edit cutomer / driver ******** " << endl;
-                            cout << "\n1. Edit Customer" << "\n";
-                            cout << "2. Edit  Driver" << "\n";
+                            cout << "\n******* Edit customer / driver ******** " << endl;
+                            cout << "\n1. Edit customer" << "\n";
+                            cout << "2. Edit  driver" << "\n";
                             cout << "Your choice : ";
                             int option;
                             cin >> option;
@@ -953,8 +953,8 @@ public:
 };
 void handleRegistration(Admin& admin) {
     cout << "\n******* REGISTER FOR A NEW MEMBER ******** " << endl;
-    cout << "\n1. Register as a Customer" << "\n";
-    cout << "2. Register as a Driver" << "\n";
+    cout << "\n1. Register customer" << "\n";
+    cout << "2. Register driver" << "\n";
     cout << "Your choice : ";
     int option;
     cin >> option;
@@ -970,8 +970,8 @@ void handleRegistration(Admin& admin) {
 void handletologin(Customer& customer, Driver& driver)
 {
     cout << "\n******* LOGIN ACCOUNT ******** " << endl;
-    cout << "\n1. Login as a Customer" << "\n";
-    cout << "2. Login as a Driver" << "\n";
+    cout << "\n1. Customer login" << "\n";
+    cout << "2. Driver login" << "\n";
     cout << "Your choice : ";
     int options;
     cin >> options;
@@ -1007,7 +1007,7 @@ int main() {
         cout << "1.  Login Admin   " << endl;
         cout << "2.  User Login    " << endl;
         cout << "3.  Register " << endl;
-        cout << "4.  For Exit    " << endl;
+        cout << "4.  Exit    " << endl;
         cout << "Your choice :";
 
         cin >> choice;
@@ -1024,7 +1024,7 @@ int main() {
             handleRegistration(admin);
             break;
         case 4:
-            cout << "GOODBYE ! " << endl;
+            cout << "Goodbye! " << endl;
             return 0;
         default:
             cout << "Invalid choice. Please try again." << endl;
