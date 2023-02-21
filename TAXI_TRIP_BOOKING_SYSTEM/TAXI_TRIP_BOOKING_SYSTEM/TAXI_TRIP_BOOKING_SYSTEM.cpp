@@ -398,7 +398,7 @@ public:
                             cout << "Enter your choice (1-4): ";
                             cin >> opt;
 
-                            if (cin.fail() || opt < 1 || opt > 5) {
+                            if (cin.fail() || opt < 1 || opt > 4) {
                                 cout << "Invalid input. Please enter a number between 1 and 4." << endl;
                                 cin.clear();
                                 cin.ignore(10000, '\n'); // ignore any remaining input in the buffer
@@ -811,13 +811,15 @@ public:
 
         // Prompt the user to enter the driver information
         cout << "\nEnter  name: ";
-        cin >> driver.name;
+        cin.ignore();
+        getline(cin, driver.name);
         cout << "Enter email address: ";
         cin >> driver.email;
         cout << "Enter phone number: ";
         cin >> driver.phone;
         cout << "Enter license number: ";
-        cin >> driver.licenseNumber;
+        cin.ignore();
+        getline(cin, driver.licenseNumber);
         cout << "Enter car license plate: ";
         cin >> driver.carLicensePlate;
         cout << "Enter password: ";
@@ -874,7 +876,8 @@ public:
 
         // Prompt the user to enter the account information
         cout << "Enter username: ";
-        cin >> account.username;
+        cin.ignore();
+        getline(cin, account.username);
         cout << "Enter email address: ";
         cin >> account.email;
         cout << "Enter phone number: ";
@@ -951,7 +954,7 @@ public:
                         cout << "\n1. View all trips" << endl;
                         cout << "2. Delete customer / driver" << endl;
                         cout << "3. Add new customer / driver" << endl;
-                        cout << "4. Update customer / driver " << endl;
+                        cout << "4. Update customer " << endl;
                         cout << "5. View all driver" << endl;
                         cout << "6. View all customer " << endl;
                         cout << "7. View report lost item" << endl;
@@ -1039,20 +1042,9 @@ public:
                         }
                         else if (choice_num == 4)
                         {
-                            Sleep(700);
-                            system("cls");
-                            cout << "\n******* Update cutomer / driver ******** " << endl;
-                            cout << "\n1. Update Customer" << "\n";
-                            cout << "2. Update  Driver" << "\n";
-                            cout << "Your choice : ";
-                            int option;
-                            cin >> option;
-                            if (option == 1)
-                                UpdateCustomerAccount();
-
-                            else {
-                                cout << "Invalid choice" << endl;
-                            }
+                            
+                            UpdateCustomerAccount();
+                           
 
                         }
                         else if (choice_num == 5)
@@ -1099,11 +1091,14 @@ public:
     void UpdateCustomerAccount() {
         Sleep(700);
         system("cls");
-        cout << "------------- Update a customer account ------------" << endl;
+  
+        cout << "+-----------------------------------------------+" << endl;
+        cout << "|     Update  Customer Account Information      |" << endl;
+        cout << "+-----------------------------------------------+" << endl;
 
         // Prompt the admin to enter the UserId of the account to be updated
         string userId;
-        cout << "Enter the UserId of the account to be updated: ";
+        cout << "\nEnter the UserId of the account to be updated: ";
         cin >> userId;
 
         // Open the CUSTOMER CSV file in input/output mode
@@ -1140,19 +1135,21 @@ public:
                 // Prompt the admin to enter the new name and email for the account
                 string newUserName, newEmail;
                 cout << "Enter the new name for the account: ";
-                cin >> newUserName;
-
+                cin.ignore();
+                getline(cin, newUserName);
                 cout << "Enter the new email for the account: ";
                 cin >> newEmail;
                 cout << "Enter the new phone number  for the account: ";
                 cin >> phoneNumber;
+                cout << "Enter the new password  for the account: ";
+                cin >> password;
 
                 // Construct the updated line as a string
                 stringstream updatedLine;
                 updatedLine << newUserName << ",";
                 updatedLine << newEmail<<",";
-                updatedLine << phoneNumber << ",";
-                updatedLine << password ;
+                updatedLine << phoneNumber<<",";
+                updatedLine << password;
 
                 // Get the current position in the file and overwrite the old line with the updated line
                 streampos pos = file.tellg();
