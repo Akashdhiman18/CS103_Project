@@ -487,6 +487,7 @@ public:
     }
 
     void reportLostItem(string userId) {
+
         Sleep(700);
         system("cls");
         cout << "\n|------- REPORT FOR LOST ITEMS -------|" << endl;
@@ -548,7 +549,7 @@ public:
         trip.time_date = std::time(nullptr);
         trip.status = "Pending";
         trip.tripid = generateTripId(); // generate a unique trip ID
-        const float RATE_PER_KM = 0.50; // define rate per kilometer
+        const float RATE_PER_KM = 3.50; // define rate per kilometer
     
         cout << "Enter distance of the trip in kilometers: ";
         cin >> trip.distance;
@@ -611,10 +612,11 @@ public:
                 cout << "Status: " << tokens[4] << endl;
                 cout << "Pickup location: " << tokens[5] << endl;
                 cout << "Destination: " << tokens[6] << endl;
-                cout << "Date of travel: " << tokens[7] << endl;
-                cout << "Time of travel: " << tokens[8] << endl;
-                cout << "Fare: " << tokens[9] << endl;
-                cout << "Time/date: " << tokens[10] << endl;
+                cout << "Distance :" << tokens[7] << endl;
+                cout << "Date of travel: " << tokens[8] << endl;
+                cout << "Time of travel: " << tokens[9] << endl;
+                cout << "Fare: " << tokens[10] << endl;
+                cout << "Time/date: " << tokens[11] << endl;
             }
         }
         if (count == 0) {
@@ -839,7 +841,7 @@ public:
         outfile << driver.phone << ",";
         outfile << driver.licenseNumber << ",";
         outfile << driver.carLicensePlate << ",";
-        outfile << driver.password;
+        outfile << driver.password << endl;
 
         outfile.close();
 
@@ -897,7 +899,7 @@ public:
         outfile << account.username << ",";
         outfile << account.email << ",";
         outfile << account.phoneNumber << ",";
-        outfile << account.password;
+        outfile << account.password<<endl;
 
         outfile.close();
 
@@ -1093,7 +1095,7 @@ public:
         system("cls");
   
         cout << "+-----------------------------------------------+" << endl;
-        cout << "|     Update  Customer Account Information      |" << endl;
+        cout << "|     Update Customer Account Information      |" << endl;
         cout << "+-----------------------------------------------+" << endl;
 
         // Prompt the admin to enter the UserId of the account to be updated
@@ -1355,8 +1357,7 @@ public:
 
     }
     void viewAllCustomer() {
-        Sleep(700);
-        system("cls");
+     
         Sleep(700);
         system("cls");
         cout << "\n|------------- All Customer ------------|" << endl;
@@ -1534,6 +1535,8 @@ void handleRegistration(Admin& admin) {
 };
 
 void handletologin(Customer& customer, Driver& driver) {
+    Sleep(700);
+    system("cls");
     cout << "+---------------------------------+" << endl;
     cout << "|         User Login              |" << endl;
     cout << "+---------------------------------+" << endl;
