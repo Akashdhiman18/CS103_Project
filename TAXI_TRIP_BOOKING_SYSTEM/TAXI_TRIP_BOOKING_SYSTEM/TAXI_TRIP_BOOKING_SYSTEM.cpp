@@ -15,6 +15,7 @@
 #include <cmath>
 
 
+
 using namespace std;
 // File Names
 string REPORT_ITEM = "d:/LostItems.csv";
@@ -88,7 +89,7 @@ string get_password() {
 
 class Driver {
 public:
-    
+
     string trim(const string& str) {
         size_t start = str.find_first_not_of(" \t\r\n");
         size_t end = str.find_last_not_of(" \t\r\n");
@@ -219,7 +220,7 @@ public:
         const int dateWidth = 15;
         cout << left << setw(idWidth) << "ID" << setw(nameWidth) << "Name"
             << setw(locWidth) << "Pickup " << setw(locWidth) << "Destination"
-            <<setw(locWidth)<<"Distance"
+            << setw(locWidth) << "Distance"
             << setw(dateWidth) << "Date Travel" << setw(dateWidth) << "Time Travel"
             << right << setw(fareWidth) << "Fare" << endl;
 
@@ -262,7 +263,7 @@ public:
                 // Print the details of the completed trip in a formatted table
                 cout << left << setw(idWidth) << tripId << setw(nameWidth) << userName
                     << setw(locWidth) << pickupLocation << setw(locWidth) << destination
-                    <<setw(locWidth)<<distance
+                    << setw(locWidth) << distance
                     << setw(dateWidth) << dateOfTravel << setw(dateWidth) << timeOfTravel
                     << right << setw(fareWidth) << fare << endl;
             }
@@ -450,7 +451,7 @@ public:
 
 class Customer {
 public:
-   
+
     void reportComplaint(string userId) {
         Sleep(700);
         system("cls");
@@ -550,7 +551,7 @@ public:
         trip.status = "Pending";
         trip.tripid = generateTripId(); // generate a unique trip ID
         const float RATE_PER_KM = 3.50; // define rate per kilometer
-    
+
         cout << "Enter distance of the trip in kilometers: ";
         cin >> trip.distance;
 
@@ -576,7 +577,7 @@ public:
         outfile << trip.distance << ",";
         outfile << trip.dateOfTravel << ",";
         outfile << trip.timeOfTravel << ",";
-        outfile <<"$"<<trip.fare << ",";
+        outfile << "$" << trip.fare << ",";
         outfile << std::asctime(std::localtime(&trip.time_date));
 
         outfile.close();
@@ -783,7 +784,7 @@ public:
         }
         return tokens;
     }
-  
+
     void registerDriver() {
         Sleep(700);
         system("cls");
@@ -899,7 +900,7 @@ public:
         outfile << account.username << ",";
         outfile << account.email << ",";
         outfile << account.phoneNumber << ",";
-        outfile << account.password<<endl;
+        outfile << account.password << endl;
 
         outfile.close();
 
@@ -909,7 +910,7 @@ public:
     }
     void login_Admin()
     {
-        
+
         Sleep(700);
         system("cls");
         string username, password;
@@ -948,6 +949,7 @@ public:
                     Sleep(800);
                     system("cls");
                     // if username and password are valid, show the taxi booking panel
+
                     while (true)
                     {
                         cout << "  ------------------------------------" << endl;
@@ -971,49 +973,20 @@ public:
                                 cout << "Invalid input. Please enter a number between 1 and 9." << endl;
                                 cin.clear();
                                 cin.ignore(10000, '\n'); // ignore any remaining input in the buffer
+
                             }
                             else {
                                 break;
                             }
                         }
-                        if (choice_num == 1)
-                        {
+                        switch (choice_num) {
+                        case 1:
                             viewAllBookingHistroy();
-                        }
-                        else if (choice_num == 3)
-                        {
+                            break;
+                        case 2:
+
                             Sleep(700);
                             system("cls");
-                            cout << "+----------------------------------------+" << endl;
-                            cout << "|     REGISTER FOR A NEW MEMBER          |" << endl;
-                            cout << "+----------------------------------------+" << endl;
-                            cout << "\nPlease select your member type:\n";
-                            cout << "\n1. Register  Customer" << "\n";
-                            cout << "2. Register  Driver" << "\n";
-                            int option;
-                            while (true) {
-                                cout << "Enter your choice (1-2): ";
-                                cin >> option;
-
-                                if (cin.fail() || option < 1 || option > 2) {
-                                    cout << "Invalid input. Please enter a number between 1 and 2." << endl;
-                                    cin.clear();
-                                    cin.ignore(10000, '\n'); // ignore any remaining input in the buffer
-                                }
-                                else {
-                                    break;
-                                }
-                            }
-                            if (option == 1)
-                                registerCustomer();
-                            else if (option == 2)
-                                registerDriver();
-                            else {
-                                cout << "Invalid choice" << endl;
-                            }
-                        }
-                        else if (choice_num == 2)
-                        {
                             cout << "+---------------------------------+" << endl;
                             cout << "|       Delete User Account       |" << endl;
                             cout << "+---------------------------------+" << endl;
@@ -1041,40 +1014,76 @@ public:
                             else {
                                 cout << "Invalid choice" << endl;
                             }
-                        }
-                        else if (choice_num == 4)
-                        {
-                            
+
+                            break;
+                        case 3:
+
+                            Sleep(700);
+                            system("cls");
+                            cout << "+----------------------------------------+" << endl;
+                            cout << "|     REGISTER FOR A NEW MEMBER          |" << endl;
+                            cout << "+----------------------------------------+" << endl;
+                            cout << "\nPlease select your member type:\n";
+                            cout << "\n1. Register  Customer" << "\n";
+                            cout << "2. Register  Driver" << "\n";
+                            int opt;
+                            while (true) {
+                                cout << "Enter your choice (1-2): ";
+                                cin >> opt;
+
+                                if (cin.fail() || opt < 1 || opt > 2) {
+                                    cout << "Invalid input. Please enter a number between 1 and 2." << endl;
+                                    cin.clear();
+                                    cin.ignore(10000, '\n'); // ignore any remaining input in the buffer
+                                }
+                                else {
+                                    break;
+                                }
+                            }
+                            if (opt == 1)
+                                registerCustomer();
+                            else if (opt == 2)
+                                registerDriver();
+                            else {
+                                cout << "Invalid choice" << endl;
+                            }
+
+                            break;
+
+                        case 4:
+
                             UpdateCustomerAccount();
-                           
+                            break;
+
+
+                        case 5:
+                            viewAllDrivers();
+                            break;
+                        case 6:
+                            viewAllCustomer();
+                            break;
+                        case 7:
+                            viewAllReportLost();
+                            break;
+                        case 8:
+                            viewAllReportComplaint();
+                            break;
+                        case 9:
+                            return;
+                            break;
+                        default:
+                            cout << "Invalid choice. Please try again." << endl;
+                            break;
 
                         }
-                        else if (choice_num == 5)
-                        {
-                            viewAllDrivers();
-                        }
-                        else if (choice_num == 6)
-                        {
-                            viewAllCustomer();
-                        }
-                        else if (choice_num == 7)
-                        {
-                            viewAllReportLost();
-                        }
-                        else if (choice_num == 8)
-                        {
-                            viewAllReportComplaint();
-                        }
-                        else if (choice_num == 9)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            cout << "Invalid choice. Please try again." << endl;
-                        }
+
                     }
+                    break;
+                  
+
                 }
+
+
                 else {
                     attempts++;
                     if (attempts >= max_attempts) {
@@ -1084,16 +1093,19 @@ public:
                     }
                     else {
                         cout << "\nInvalid username or password. Please try again. " << endl;
-                    }
 
+                    }
                 }
             }
+
         }
     }
+   
+    
     void UpdateCustomerAccount() {
         Sleep(700);
         system("cls");
-  
+
         cout << "+-----------------------------------------------+" << endl;
         cout << "|     Update Customer Account Information      |" << endl;
         cout << "+-----------------------------------------------+" << endl;
@@ -1149,8 +1161,8 @@ public:
                 // Construct the updated line as a string
                 stringstream updatedLine;
                 updatedLine << newUserName << ",";
-                updatedLine << newEmail<<",";
-                updatedLine << phoneNumber<<",";
+                updatedLine << newEmail << ",";
+                updatedLine << phoneNumber << ",";
                 updatedLine << password;
 
                 // Get the current position in the file and overwrite the old line with the updated line
@@ -1357,7 +1369,7 @@ public:
 
     }
     void viewAllCustomer() {
-     
+
         Sleep(700);
         system("cls");
         cout << "\n|------------- All Customer ------------|" << endl;
@@ -1429,7 +1441,7 @@ public:
                 cout << "Date of travel: " << tokens[8] << endl;
                 cout << "Time of travel: " << tokens[9] << endl;
                 cout << "Fare: " << tokens[10] << endl;
-                cout << "Time/date: " << tokens[11] << endl;
+                cout << "Time/date:" << tokens[11] << endl;
             }
         }
         if (count == 0) {
@@ -1525,7 +1537,7 @@ void handleRegistration(Admin& admin) {
         admin.registerCustomer();
         break;
     case 2:
-       admin.registerDriver();
+        admin.registerDriver();
         break;
     default:
         cout << "Invalid choice. Please try again." << endl;
@@ -1575,14 +1587,17 @@ int main()
     Customer customer;
     Driver driver;
     Admin admin;
+    
     do {
+        Sleep(800);
+        system("cls");
         cout << "+-----------------------------------+" << endl;
         cout << "|    WELCOME TO OUR TAXI BOOKING    |" << endl;
         cout << "+-----------------------------------+" << endl;
         cout << "\n1.Login as Admin" << endl;
         cout << "2.Login as User" << endl;
         cout << "3.Register New Account" << endl;
-        cout << "4.For Exit    " << endl;
+        cout << "4.For Exit " << endl;
         int choice;
         while (true) {
             cout << "Enter your choice (1-4): ";
